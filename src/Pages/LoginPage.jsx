@@ -1,11 +1,10 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
-
 import movieIcon from '../assets/logo.svg'
-
 import {signInUser} from '../JS/firebase'
-
 import { onAuthStateChanged,auth } from "../JS/firebase"
+
+
 
 
 
@@ -16,6 +15,7 @@ export default function LoginPage(){
 
     const emailContainerRef = useRef(null)
     const passwordContainerRef = useRef(null)
+
 
 
 
@@ -115,8 +115,10 @@ export default function LoginPage(){
         }
     }
 
-
-    
+    const [showPassword,setShowPassword] = useState(false)
+    function handleShowChange(){
+        setShowPassword(prevShowPassword=>!prevShowPassword)
+    }
 
     
 
@@ -124,7 +126,7 @@ export default function LoginPage(){
         <div className="form-page container grid">
             <img src={movieIcon} />
             <div className="container container--form bg-semi-dark-blue flow">
-                <h1 className="heading-l txt-white">Login </h1>
+                <h1 className="heading-l txt-white">Login</h1>
                 <div className="form-fields-container">
 
                     <div ref={emailContainerRef} className='input-field'>
@@ -132,13 +134,15 @@ export default function LoginPage(){
                         <p className='body-s txt-red error'>Invalid email adress</p>
                         <p className='body-s txt-red empty'>Can't be empty</p>
                     </div>
-
                     <div ref={passwordContainerRef} className='input-field'>
-                        <input ref={passwordRef} type="password" placeholder='Password' />
+                        <input ref={passwordRef} 
+                                type={showPassword?'text':'password'} 
+                                placeholder='Password' />
                         <p className='body-s txt-red error'>Invalid password</p>
                         <p className='body-s txt-red empty'>Can't be empty</p>
                     </div>
-
+                    <input onChange={handleShowChange} type="checkbox" id="show-password" />
+                    <label for="show-password" className="txt-white heading-s">Show password</label>
                     {error?
                         <p className="txt-red txt-center">invalid login credentails</p>
                         :null

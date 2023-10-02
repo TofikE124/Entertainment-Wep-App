@@ -122,6 +122,12 @@ export default function SignUpPage(){
     }
 
 
+    const [showPassword,setShowPassword] = useState(false)
+    function handleShowChange(){
+        setShowPassword(prevShowPassword=>!prevShowPassword)
+    }
+
+
     return(
         <div className="form-page container grid">
             <img src={movieIcon} />
@@ -136,16 +142,26 @@ export default function SignUpPage(){
                     </div>
 
                     <div ref={passwordContainerRef} className='input-field'>
-                        <input ref={passwordRef} type="password" placeholder='Password' />
+                        <input 
+                            ref={passwordRef} 
+                            type={showPassword?'text':'password'} 
+                            placeholder='Password' />
                         <p className='body-s txt-red error'>Invalid password</p>
                         <p className='body-s txt-red empty'>Can't be empty</p>
                     </div>
 
                     <div ref={rePasswordContainerRef} className='input-field'>
-                        <input ref={rePasswordRef} type="password" placeholder='Repeat password' />
+                        <input 
+                            ref={rePasswordRef} 
+                            type={showPassword?'text':'password'} 
+                            placeholder='Repeat password' />
                         <p className='body-s txt-red error'>Password doesn't match</p>
                         <p className='body-s txt-red empty'>Can't be empty</p>
                     </div>
+
+                    <input onChange={handleShowChange} type="checkbox" id="show-password" />
+                    <label for="show-password" className="txt-white heading-s">Show password</label>
+                    
 
                     {error?
                         <p className="txt-red txt-center">Email already in use</p>
